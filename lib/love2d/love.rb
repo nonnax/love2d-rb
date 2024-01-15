@@ -16,6 +16,12 @@ def Math.random(a, b)
   Gosu::random(a, b)
 end
 
+class Numeric
+  def to_rad
+    self * Math::PI / 180
+  end
+end
+
 module Gosu
   class Color
     CHARCOAL  = Gosu::Color.argb(0xff36454f)
@@ -24,7 +30,7 @@ module Gosu
     SILVER    = Gosu::Color.argb(0xffc0c0c0)
     MAGENTA = FUCHSIA
   end
-  def self.xdraw_circle(x, y, r, c, z = 0, thickness = 1, sides = nil, mode = :default)
+  def self.xxdraw_circle(x, y, r, c, z = 0, thickness = 1, sides = nil, mode = :default)
     # Unless specified, calculate a nice-looking "minimum" number of sides
     # sides = (r + Math::sqrt(r * 0.1) * 4).floor if sides.nil?
     sides = (2.0 * r * Math::PI).floor if sides.nil?
@@ -58,7 +64,7 @@ module Gosu
   end
 
   def self.draw_circle(x, y, radius, color, *)
-    segments = 20*3 # Increase for a smoother circle
+    segments = 30 # Increase for a smoother circle
 
     angle_increment = 360.0 / segments
 
