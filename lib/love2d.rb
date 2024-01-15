@@ -1,5 +1,4 @@
-['gravity.rb',
-'love.rb',
+['love.rb',
 'p5Vector.rb',
 'range.rb',
 'shapes.rb',

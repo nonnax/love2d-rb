@@ -3,7 +3,7 @@
 # https://github.com/nonnax
 require "gosu"
 
-module ZOrder BACKGROUND, MIDDLE, TOP = *0..2 end
+# module ZOrder BACKGROUND, MIDDLE, TOP = *0..2 end
 
 # NONE    = Gosu::Color.argb(0x00000000)
 # BLACK   = Gosu::Color.argb(0xff000000)
