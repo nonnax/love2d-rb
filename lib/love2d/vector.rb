@@ -101,8 +101,6 @@ Struct.new(:x, :y) do
     Vec[Math.cos(theta)*r, Math.sin(theta)*r]
   end
 
-  alias fromAngle polar
-
   def project(b)
     b.norm * self.dot(b.clone.norm)
   end

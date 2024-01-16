@@ -16,6 +16,10 @@ def Math.random(a, b)
   Gosu::random(a, b)
 end
 
+def Math.box_center(x1, y1, w, h)
+    [(x1 + w) / 2, (y1 + h) / 2]
+end
+
 class Numeric
   def to_rad
     self * Math::PI / 180
