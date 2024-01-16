@@ -77,6 +77,7 @@ Struct.new(:x, :y) do
     dy = y - b.y
     Math.sqrt(dx ** 2 + dy ** 2)
   end
+  alias dist distance
 
   # Returns a vector corresponding to the rotation of this vector around the
   # origin (0, 0) by +radians+ radians.
@@ -96,9 +97,11 @@ Struct.new(:x, :y) do
     set! Vec[x, y]
   end
 
-  def polar(theta, r = 1)
+  def self.polar(theta, r = 1)
     Vec[Math.cos(theta)*r, Math.sin(theta)*r]
   end
+
+  alias fromAngle polar
 
   def project(b)
     b.norm * self.dot(b.clone.norm)

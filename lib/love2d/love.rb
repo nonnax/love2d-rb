@@ -20,6 +20,12 @@ class Numeric
   def to_rad
     self * Math::PI / 180
   end
+  def inc(n=1)
+    self + n
+  end
+  def dec(n=1)
+    self - n
+  end
 end
 
 module Gosu
@@ -167,6 +173,22 @@ class Shape
     c.draw(x, y, zorder, w, h, color)
   end
 end
+
+class Gosu::Win < Gosu::Window
+  SCREEN_HEIGHT = 600
+  SCREEN_WIDTH = 800
+  INITIAL_ZOOM = 1.0
+  ZOOM_STEP = 0.1
+  attr_accessor :planets
+  def initialize(w=SCREEN_WIDTH, h=SCREEN_HEIGHT, z=false)
+    super(w, h, z)
+    @font = Gosu::Font.new(9)
+    @zoom = INITIAL_ZOOM
+  end
+end
+
+
+Color = Gosu::Color
 
 # update_interval (both the constructor argument, and the r/w property) controls the target framerate of Gosu.
 # However, because Gosu usually waits for a vsync each frame, higher values than 60 (or whatever your screen uses) don't work.
