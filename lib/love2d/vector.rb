@@ -85,6 +85,7 @@ Struct.new(:x, :y) do
     a = Math.atan2(y, x) - Math.atan2(b.y, b.x)
     (a + Math::PI) % (Math::PI*2) - Math::PI
   end
+  alias angle_to angle2
 
   # Returns the euclidean distance between this vector and +other_vector+.
   def distance(b)
@@ -106,18 +107,22 @@ Struct.new(:x, :y) do
   def rotate!(radians)
     sin = Math.sin radians
     cos = Math.cos radians
-    prev_x = x
-    x = cos * x - sin * y
-    y = sin * prev_x + cos * y
-    set! Vec[x, y]
+    set! Vec[cos * x - sin * y, sin * x + cos * y]
   end
 
   def self.polar(theta, r = 1)
     Vec[Math.cos(theta)*r, Math.sin(theta)*r]
   end
 
+  # --- Get the perpendicular projection vector of vector b.
   def project(b)
     b.norm * self.dot(b.clone.norm)
+  end
+
+  # --- Get the perpendicular vector of a vector.
+  # --  param vector v to get perpendicular axes from
+  def perpendicular(v)
+  	Vec[-v.y, v.x]
   end
 
   # def projectTo(b)
@@ -132,8 +137,8 @@ Struct.new(:x, :y) do
     else
       self
     end
-
   end
+  alias limit! limit
 
   # make 3D
   def coerce(z)

@@ -190,6 +190,11 @@ class Gosu::Win < Gosu::Window
     @font = Gosu::Font.new(9)
     @zoom = INITIAL_ZOOM
   end
+
+  def draw_vectors(a, b, color:Color::GREEN)
+    line(a.x, a.y, b.x, b.y, color)
+  end
+
 end
 
 
