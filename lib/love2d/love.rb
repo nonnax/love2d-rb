@@ -109,7 +109,10 @@ module Gosu
         draw_line(ax, ay, color, bx, by, color)
     end
     # draw_rect(x, y, width, height, c, z = 0, mode = :default)
-    def rect(x, y, h, w, color=Gosu::Color::WHITE, z:0)
+    def rect(x, y, h, w, color=Gosu::Color::WHITE, z:0, center:false)
+        if center
+          x -= w/2.0
+        end
         draw_rect(x, y, h, w, color, z)
     end
 
