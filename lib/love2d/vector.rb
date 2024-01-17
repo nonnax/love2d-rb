@@ -28,6 +28,21 @@ Struct.new(:x, :y) do
     Vec[-x, -y]
   end
 
+  #destructive version
+  def add!(other)
+    set! self + other
+  end
+  def mult!(scalar)
+    set! self * scalar
+  end
+  def sub!(other)
+    set! self - other
+  end
+  def div!(scalar)
+    set! self / scalar
+  end
+
+
   def clone
     Vec[x, y]
   end
