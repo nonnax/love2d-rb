@@ -1,6 +1,7 @@
 ['love.rb',
 'camera.rb',
 'p5Vector.rb',
+'calculation.rb',
 'range.rb',
 'shapes.rb',
 'vector.rb',
