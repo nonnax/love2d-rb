@@ -1,5 +1,5 @@
 class Range
-  
+
   #
   # Linearly interpolates a value between begin and end.
   #
@@ -9,5 +9,8 @@ class Range
     ta, tb = (1.0 - t), t
     a * ta  + b * tb
   end
-  
+
+ def fmap(range_target)
+   ->(x){ (range_target.min+(range_target.max-range_target.min)) * ((x-self.min)/(self.max-self.min).to_f)}
+ end
 end

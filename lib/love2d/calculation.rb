@@ -38,6 +38,7 @@ module Calculation
   alias clamp constrain
 
   # functional style of clamp
+  # returns a lambda f(x)
   def fconstrain(low, high)
     ->(n){ [low, [n, high].min].max }
   end
@@ -93,6 +94,43 @@ module Calculation
     rand
   end
 end
+
+
+module NumericExt
+  # params 4 numerics or 2 ranges
+  def map(d1, d2, r1=nil, r2=nil)
+    unless [r1, r2].all? then
+      a, b = d1, d2
+      d1, d2 = a.minmax
+      r1, r2 = b.minmax
+    end
+    r1 + (r2 - r1) * ((self - d1) / (d2 - d1).to_f)
+  end
+
+  # unit scaling
+  def norm(start, stop)
+    (self - start) / (stop - start).to_f
+  end
+
+  def lerp(stop, amt=0)
+    self + (stop - self) * amt
+  end
+
+  def to_radians
+    self * (Math::PI / 180.0)
+  end
+
+  def to_degrees
+    self * (180.0 / Math::PI)
+  end
+
+  def sq
+    self**2
+  end
+
+end
+
+Numeric.include(NumericExt)
 
 if __FILE__==$0
   # Example usage
