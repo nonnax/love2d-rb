@@ -115,9 +115,9 @@ module Gosu
     end
 
     # draw_triangle(x1, y1, c1, x2, y2, c2, x3, y3, c3, z = 0, mode = :default) ⇒ void
-    # def triangle(ax, ay, bx, by, cx, cy, color=Gosu::Color::WHITE, z: 0, mode: :default)
-    #     draw_triangle(ax, ay, color, bx, by, color, cx, cy, color, )
-    # end
+    def triangle(ax, ay, bx, by, cx, cy, color=Gosu::Color::WHITE, z: 0, mode: :default)
+        draw_triangle(ax, ay, color, bx, by, color, cx, cy, color, )
+    end
 
     def triangle_rot(x, y, w, h, angle, color=Gosu::Color::WHITE)
 
