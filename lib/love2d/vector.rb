@@ -124,6 +124,7 @@ Struct.new(:x, :y) do
   def perpendicular(v)
   	Vec[-v.y, v.x]
   end
+  alias tangent perpendicular
 
   # def projectTo(b)
   #   (self*b/b.mag2)*b

@@ -115,8 +115,54 @@ module Gosu
     end
 
     # draw_triangle(x1, y1, c1, x2, y2, c2, x3, y3, c3, z = 0, mode = :default) ⇒ void
-    def triangle(ax, ay, bx, by, cx, cy, color=Gosu::Color::WHITE, z: 0, mode: :default)
-        draw_triangle(ax, ay, color, bx, by, color, cx, cy, color, z, mode)
+    # def triangle(ax, ay, bx, by, cx, cy, color=Gosu::Color::WHITE, z: 0, mode: :default)
+    #     draw_triangle(ax, ay, color, bx, by, color, cx, cy, color, )
+    # end
+
+    def triangle_rot(x, y, w, h, angle, color=Gosu::Color::WHITE)
+
+      def calculate_triangle_center(vertices)
+        # Calculate the centroid of the triangle
+        center_x = (vertices[0][:x] + vertices[1][:x] + vertices[2][:x]) / 3.0
+        center_y = (vertices[0][:y] + vertices[1][:y] + vertices[2][:y]) / 3.0
+        { x: center_x, y: center_y }
+      end
+
+      def draw_triangle(vertices, color)
+        line(vertices[0][:x], vertices[0][:y], vertices[1][:x], vertices[1][:y], color)
+        line(vertices[1][:x], vertices[1][:y], vertices[2][:x], vertices[2][:y], color)
+        line(vertices[2][:x], vertices[2][:y], vertices[0][:x], vertices[0][:y], color)
+      end
+
+      vertices = [{ x: x, y: y }, { x: x+w/2, y: y+h }, { x: x-w/2, y: y+h }]
+      center = calculate_triangle_center(vertices)
+
+      # Calculate the rotated vertices
+      rotated_vertices = vertices.map do |vertex|
+        x = center[:x] + (vertex[:x] - center[:x]) * Math.cos(angle.to_radians) - (vertex[:y] - center[:y]) * Math.sin(angle.to_radians)
+        y = center[:y] + (vertex[:x] - center[:x]) * Math.sin(angle.to_radians) + (vertex[:y] - center[:y]) * Math.cos(angle.to_radians)
+        { x: x, y: y }
+      end
+
+      # Draw the rotated triangle
+      draw_triangle(rotated_vertices, color)
+    end
+
+    def triangle(x, y, angle=0, size=10, color = Gosu::Color::RED, z:0, mode: :default)
+      angle1 = angle
+      angle2 = angle1 + 2 * Math::PI / 3
+      angle3 = angle1 + 4 * Math::PI / 3
+
+      x1 = x + size * Math.cos(angle1)
+      y1 = y + size * Math.sin(angle1)
+
+      x2 = x + size * Math.cos(angle2)*4
+      y2 = y + size * Math.sin(angle2)*5
+
+      x3 = x + size * Math.cos(angle3)
+      y3 = y + size * Math.sin(angle3)
+
+      draw_triangle(x1, y1, color, x2, y2, color, x3, y3, color, z, mode)
     end
 
     def print(text, x, y, color=Gosu::Color::WHITE, size:10, z:ZOrder::TOP)
