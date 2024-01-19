@@ -1,10 +1,19 @@
-Vec =
-Struct.new(:x, :y) do
+class Vec
   include Comparable
+  attr_accessor :x, :y
+
+  instance_eval do
+    alias [] new
+  end
+
+  def initialize(x = 0, y = 0)
+    @x = x
+    @y = y
+  end
 
   def set!(other)
-    self.x = other.x
-    self.y = other.y
+    @x = other.x
+    @y = other.y
     self
   end
 
@@ -81,11 +90,35 @@ Struct.new(:x, :y) do
     Math.atan2(y, x)
   end
 
-  def angle2(b)
+  def angle_to(b)
     a = Math.atan2(y, x) - Math.atan2(b.y, b.x)
     (a + Math::PI) % (Math::PI*2) - Math::PI
   end
-  alias angle_to angle2
+  alias angle2 angle_to
+
+  def angle_between(v)
+    # dot_product = @x * v.x + @y * v.y
+    Math.acos(dot(v) / (mag() * v.mag()))
+  end
+
+  def degrees
+     self.class.to_degrees_gosu(heading)
+  end
+
+  def degrees_to(b)
+     self.class.to_degrees_gosu(angle2(b))
+  end
+  alias degrees2 degrees_to
+
+  def self.to_degrees_gosu(theta)
+   theta * 180.0 / Math::PI + 90
+  end
+
+  def angle360(b)
+    dot = x*b.x + y*b.y      # dot product
+    det = x*b.y - y*b.x      # determinant
+    Math.atan2(det, dot)  # atan2(y, x) or atan2(sin, cos)
+  end
 
   # Returns the euclidean distance between this vector and +other_vector+.
   def distance(b)

@@ -120,7 +120,6 @@ module Gosu
     end
 
     def triangle_rot(x, y, w, h, angle, color=Gosu::Color::WHITE)
-
       def calculate_triangle_center(vertices)
         # Calculate the centroid of the triangle
         center_x = (vertices[0][:x] + vertices[1][:x] + vertices[2][:x]) / 3.0
@@ -167,6 +166,11 @@ module Gosu
 
     def print(text, x, y, color=Gosu::Color::WHITE, size:10, z:ZOrder::TOP)
       @font.draw_text(text, x, y, z, 1.0, 1.0, color)
+    end
+
+    # degree angle between a & b vectors
+    def get_angle(a, b)
+       Gosu.angle(a.x, a.y, b.x, b.y)
     end
 
     def dt()= (update_interval / 1000.0)
