@@ -97,16 +97,16 @@ end
 
 
 module NumericExt
-  # params 4 numerics or 2 ranges
-  def map(d1, d2, r1=nil, r2=nil)
-    unless [r1, r2].all? then
-      a, b = d1, d2
-      d1, d2 = a.minmax
-      r1, r2 = b.minmax
-    end
-    r1 + (r2 - r1) * ((self - d1) / (d2 - d1).to_f)
+  def range_to_a(a, b)
+    [a.minmax, b.minmax].flatten
   end
 
+  def map(d1, d2, r1=nil, r2=nil)
+    # 4-params numerics or 2-params ranges
+    d1, d2, r1, r2 = range_to_a(r1, r2) unless [r1, r2].all?
+
+    r1 + (r2 - r1) * ((self - d1) / (d2 - d1).to_f)
+  end
   # unit scaling
   def norm(start, stop)
     (self - start) / (stop - start).to_f
@@ -119,18 +119,49 @@ module NumericExt
   def to_radians
     self * (Math::PI / 180.0)
   end
+  alias radians to_radians
 
   def to_degrees
     self * (180.0 / Math::PI)
   end
+  alias degrees to_degrees
 
   def sq
     self**2
   end
 
+  def gosu_to_radians
+    # Converts a Gosu-compatible angle to radians using the formula (self - 90) * Math::PI / 180.0
+    (self - 90) * Math::PI / 180.0
+  end
+
+  def to_degrees_gosu
+   # Converts radians to a Gosu-compatible angle using the formula self * 180.0 / Math::PI + 90
+   (self * 180.0) / Math::PI + 90
+  end
+
+  def inc(n=1)
+    self + n
+  end
+
+  def dec(n=1)
+    self - n
+  end
 end
 
 Numeric.include(NumericExt)
+
+
+module EnumerableExt
+  def scale_map(range, &block)
+    map{|e|
+      r = e.map(*[minmax, range.minmax].flatten)
+      block ?  block.call(r) : r
+    }
+  end
+end
+
+Enumerable.include(EnumerableExt)
 
 if __FILE__==$0
   # Example usage

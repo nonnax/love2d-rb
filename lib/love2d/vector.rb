@@ -1,3 +1,7 @@
+#!/usr/bin/env ruby
+# Id$ nonnax Thu Jan 11 21:08:25 2024
+# https://github.com/nonnax
+
 class Vec
   include Comparable
   attr_accessor :x, :y
@@ -91,27 +95,22 @@ class Vec
   end
 
   def angle_to(b)
-    a = Math.atan2(y, x) - Math.atan2(b.y, b.x)
-    (a + Math::PI) % (Math::PI*2) - Math::PI
+    Math.atan2(b.y - y, b.x - x)
   end
+  # def angle_to(b)
+  #   a = Math.atan2(y, x) - Math.atan2(b.y, b.x)
+  #   (a + Math::PI) % (Math::PI*2) - Math::PI
+  # end
   alias angle2 angle_to
 
-  def angle_between(v)
+  def angle_between(b)
     # dot_product = @x * v.x + @y * v.y
-    Math.acos(dot(v) / (mag() * v.mag()))
+    Math.acos(dot(b) / (mag() * b.mag()))
   end
 
-  def degrees
-     self.class.to_degrees_gosu(heading)
-  end
-
-  def degrees_to(b)
-     self.class.to_degrees_gosu(angle2(b))
-  end
-  alias degrees2 degrees_to
-
-  def self.to_degrees_gosu(theta)
-   theta * 180.0 / Math::PI + 90
+  def angleBetween(b)
+    costh = dot(b) / (mag() * b.mag())
+    Math.acos([1, [-1, costh].max].min)
   end
 
   def angle360(b)
@@ -180,7 +179,11 @@ class Vec
   end
 
   def inspect
-    "Vector(#{x},#{y})"
+    "Vec(#{x},#{y})"
+  end
+
+  def to_s
+    inspect
   end
 
 end

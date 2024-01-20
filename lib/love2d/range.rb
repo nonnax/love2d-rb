@@ -1,3 +1,7 @@
+#!/usr/bin/env ruby
+# Id$ nonnax Thu Jan 11 21:08:25 2024
+# https://github.com/nonnax
+
 class Range
 
   #

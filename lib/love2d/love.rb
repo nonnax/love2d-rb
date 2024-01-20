@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 # Draws an unfilled circle with a line of any thickness
 # Based on code by shawn42
 #
@@ -18,18 +19,6 @@ end
 
 def Math.box_center(x1, y1, w, h)
     [(x1 + w) / 2, (y1 + h) / 2]
-end
-
-class Numeric
-  def to_rad
-    self * Math::PI / 180
-  end
-  def inc(n=1)
-    self + n
-  end
-  def dec(n=1)
-    self - n
-  end
 end
 
 module Gosu
